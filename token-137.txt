@@ -1,0 +1,14 @@
+kubectl describe secrets -n kube-system $(kubectl -n kube-system get secret | awk '/dashboard-admin/{print $1}')
+Name:         dashboard-admin-token-jg5g8
+Namespace:    kube-system
+Labels:       <none>
+Annotations:  kubernetes.io/service-account.name: dashboard-admin
+              kubernetes.io/service-account.uid: d049daba-62bc-4aa4-9432-524cc2a6a8c1
+
+Type:  kubernetes.io/service-account-token
+
+Data
+====
+ca.crt:     1070 bytes
+namespace:  11 bytes
+token:      eyJhbGciOiJSUzI1NiIsImtpZCI6Ikd4WlJZczE0d3plTEhDajBfYUVCQ3R6akRDMlAxNV85cEY1VXRLb1BUNkUifQ.eyJpc3MiOiJrdWJlcm5ldGVzL3NlcnZpY2VhY2NvdW50Iiwia3ViZXJuZXRlcy5pby9zZXJ2aWNlYWNjb3VudC9uYW1lc3BhY2UiOiJrdWJlLXN5c3RlbSIsImt1YmVybmV0ZXMuaW8vc2VydmljZWFjY291bnQvc2VjcmV0Lm5hbWUiOiJkYXNoYm9hcmQtYWRtaW4tdG9rZW4tamc1ZzgiLCJrdWJlcm5ldGVzLmlvL3NlcnZpY2VhY2NvdW50L3NlcnZpY2UtYWNjb3VudC5uYW1lIjoiZGFzaGJvYXJkLWFkbWluIiwia3ViZXJuZXRlcy5pby9zZXJ2aWNlYWNjb3VudC9zZXJ2aWNlLWFjY291bnQudWlkIjoiZDA0OWRhYmEtNjJiYy00YWE0LTk0MzItNTI0Y2MyYTZhOGMxIiwic3ViIjoic3lzdGVtOnNlcnZpY2VhY2NvdW50Omt1YmUtc3lzdGVtOmRhc2hib2FyZC1hZG1pbiJ9.eT-blQxyNHAovBELKuF57_NT-gUXUQZZYtXnnuqgF9rCR6jbv9BXGbZ1cGx8KOX_0M8XjofnoYC2LuNTOuPbg8ZFoHhqgzVMDclezjkAgQM-BlJ-GSEslYldMyPgFiGiBmHIv3QnPm4O9hF3oa7WH3EmfONdPmkhczdV9PYn_ZMZ8JLm2EAAAignT66sGMDlFf3R8dfvNDdHT2751g3CK3N81f_MdylLXKhLzRxATpgPibs70kj_b9rzE7Oba14nw9cu3U4hkDh1ErieHGReQrrCF-pXe4ZpPJmc-a4LXug-P_EtlvLTG0s4GunXekg8qSf3CWRPOIC34cVVK1Gkkw

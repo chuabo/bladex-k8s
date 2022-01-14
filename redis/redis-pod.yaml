@@ -1,0 +1,19 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: app-redis-pod
+  namespace: bladex
+  labels:
+    app: app-redis
+spec:
+  containers:
+  - name: k8s-app-redis
+    image: chuabo/redis
+    imagePullPolicy: IfNotPresent
+    ports:
+     - containerPort: 6379
+  tolerations:
+  - key: "node-role.kubernetes.io/master"
+    operator: "Equal"
+    value: ""
+    effect: "NoSchedule"

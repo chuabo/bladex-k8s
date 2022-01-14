@@ -1,0 +1,47 @@
+---
+apiVersion: v1
+kind: Endpoints
+metadata:
+  name: nacos-service
+  namespace: bladex
+  labels:
+    app: nacos-service
+subsets:
+- addresses:
+  - ip: 192.168.127.1
+  ports:
+    - protocol: TCP
+      name: nacos1
+      port: 8848
+    - protocol: TCP
+      name: nacos2
+      port: 9848
+    - protocol: TCP
+      name: nacos3
+      port: 9849
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: nacos-service
+  namespace: bladex
+  labels:
+    app: nacos-service
+spec:
+  type: NodePort
+  ports:
+    - protocol: TCP
+      name: nacos1
+      port: 8848
+      targetPort: 8848
+      nodePort: 38848
+    - protocol: TCP
+      name: nacos2
+      port: 9848
+      targetPort: 9848
+      nodePort: 39848
+    - protocol: TCP
+      name: nacos3
+      port: 9849
+      targetPort: 9849
+      nodePort: 39849

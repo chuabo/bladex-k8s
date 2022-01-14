@@ -1,0 +1,14 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: app-web-service
+  namespace: bladex
+spec:
+  selector:
+    name: app-web-pod
+  type: NodePort
+  ports:
+    - protocol: TCP
+      port: 10008
+      targetPort: 80
+      nodePort: 30008

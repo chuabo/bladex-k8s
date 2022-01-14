@@ -1,0 +1,19 @@
+apiVersion: v1
+kind: ReplicationController
+metadata:
+  name: nacos-rc
+  namespace: bladex
+spec:
+  replicas: 1
+  selector:
+    name: app-nacos-pod
+  template:
+    metadata:
+      labels:
+        name: app-nacos-pod
+    spec:
+      containers:
+      - name: k8s-app-nacos
+         image: chuabo/nacos
+         ports:
+         - containerPort: 8848

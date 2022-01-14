@@ -1,0 +1,19 @@
+apiVersion: v1
+kind: ReplicationController
+metadata:
+  name: auth-rc
+  namespace: bladex
+spec:
+  replicas: 1
+  selector:
+    name: app-auth-pod
+  template:
+    metadata:
+      labels:
+        name: app-auth-pod
+    spec:
+      containers:
+      - name: app-auth-pod
+        image: app-auth-service:1.0.0
+        ports:
+        - containerPort: 8100

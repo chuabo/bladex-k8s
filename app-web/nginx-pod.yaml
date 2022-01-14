@@ -1,0 +1,19 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: app-web-pod
+  namespace: bladex
+  labels:
+    app: app-web
+spec:
+  containers:
+  - name: k8s-app-web
+    image: app-web:1.0.0
+    imagePullPolicy: IfNotPresent
+    ports:
+     - containerPort: 80
+  tolerations:
+  - key: "node-role.kubernetes.io/master"
+    operator: "Equal"
+    value: ""
+    effect: "NoSchedule"

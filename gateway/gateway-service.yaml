@@ -1,0 +1,14 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: app-gateway-service
+  namespace: bladex
+spec:
+  selector:
+    name: app-gateway-pod
+  type: NodePort
+  ports:
+    - protocol: TCP
+      port: 10009
+      targetPort: 19999
+      nodePort: 39999

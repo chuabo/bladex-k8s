@@ -1,0 +1,83 @@
+#apiVersion: extensions/v1beta1
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  #annotations:
+    #deployment.kubernetes.io/revision: "1"
+  #creationTimestamp: 2021-12-22T01:28:52Z
+  #generation: 3
+  labels:
+    deployId: "13"
+  name: dmo-watcher-deploy
+  namespace: default
+  #resourceVersion: "408112"
+  #selfLink: /apis/extensions/v1beta1/namespaces/default/deployments/dmo-watcher-deploy
+  #uid: 8587ec39-62c6-11ec-8dfb-000c29e5217d
+spec:
+  #progressDeadlineSeconds: 600
+  replicas: 1
+  #revisionHistoryLimit: 10
+  selector:
+    matchLabels:
+      deployId: "13"
+  strategy:
+    rollingUpdate:
+      maxSurge: 0
+      maxUnavailable: 1
+    type: RollingUpdate
+  template:
+    metadata:
+      annotations:
+        deployName: watcher
+        version: "2"
+      creationTimestamp: null
+      deletionGracePeriodSeconds: 0
+      labels:
+        deployId: "13"
+        version: "2"
+    spec:
+      containers:
+      - args:
+        - --apiserver=192.168.127.154:8081
+        - --in-cluster=false
+        - --port=8080
+        - --clusterId=7
+        - --domeosServer=http://192.168.127.1:8082/api/k8sevent/report
+        env:
+        - name: DOMEOS_SERVER_ADDR
+          value: http://192.168.127.1:8082
+        - name: CLUSTER_NAME
+          value: v10
+        - name: NETWORK_MODE
+          value: DEFAULT
+        - name: MY_POD_NAME
+          valueFrom:
+            fieldRef:
+              apiVersion: v1
+              fieldPath: metadata.name
+        - name: MY_POD_NAMESPACE
+          valueFrom:
+            fieldRef:
+              apiVersion: v1
+              fieldPath: metadata.namespace
+        - name: MY_POD_IP
+          valueFrom:
+            fieldRef:
+              apiVersion: v1
+              fieldPath: status.podIP
+        image: 192.168.127.158:5000/kube_event_watcher:v0.1.0
+        imagePullPolicy: Always
+        name: watcher-0
+        resources:
+          limits:
+            cpu: 100m
+            memory: 1Gi
+        terminationMessagePath: /dev/termination-log
+        terminationMessagePolicy: File
+      dnsPolicy: ClusterFirst
+      nodeSelector:
+        master: USER_LABEL_VALUE
+      restartPolicy: Always
+      schedulerName: default-scheduler
+      securityContext: {}
+      terminationGracePeriodSeconds: 30

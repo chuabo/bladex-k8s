@@ -1,0 +1,46 @@
+apiVersion: extensions/v1beta1
+kind: Service
+metadata:
+  name: app-gateway-service
+  namespace: bladex
+  labels:
+    app: app-gateway-service
+spec:
+  ports:
+  - port: 19999
+    targetPort: 19999
+    protocol: TCP
+  selector:
+    app: app-gateway-service
+
+---
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: app-gateway-service
+  namespace: bladex
+  labels:
+    app: app-gateway-dep
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: app-gateway-service
+  template:
+    metadata:
+      labels:
+        app: app-gateway-service
+    spec:
+      #hostNetwork: true
+      containers:
+      - name: app-gateway-pod
+        image: 192.168.127.158:5000/app-gateway-service:1.0.0
+        imagePullPolicy: IfNotPresent
+        ports:
+        - containerPort: 19999
+        volumeMounts:
+        - mountPath : /opt/applog
+          name: my-volume
+      volumes:
+      - name: my-volume
+        emptyDir: {}

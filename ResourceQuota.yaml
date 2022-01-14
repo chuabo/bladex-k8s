@@ -1,0 +1,11 @@
+apiVersion: v1
+kind: ResourceQuota
+metadata:
+  name: mem-cpu-demo
+spec:
+  hard:
+    requests.cpu: "0.1"   // 要求cpu1个     即cpu要求不得超过1个cpu
+    #requests.memory: 1Gi  // 要求内存1gi    即内存要求不得超过1Gi
+    requests.memory: 256Mi  // 要求内存1gi    即内存要求不得超过1Gi
+    limits.cpu: "0.1"  // cpu限制2个          即cpu限制不得超过2个cpu
+    limits.memory: 256Mi // 内存限制2gi       即内存限制不得超过2Gi

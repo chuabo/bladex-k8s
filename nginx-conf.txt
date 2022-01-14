@@ -1,0 +1,22 @@
+    location / {                                      
+        root   /usr/share/nginx/html;                 
+        index  index.html index.htm;                  
+    } 
+    location /api {
+        proxy_pass http://10.244.0.252:19999/;
+    }                                       
+    location /blade-auth/ {                                              
+        proxy_pass http://10.244.0.3:8100/;                  
+    }
+    location /blade-system/ {                                              
+        proxy_pass http://10.244.0.6:8106/;                  
+    }
+    location /blade-user/ {                                              
+        proxy_pass http://10.244.0.254:8102/;                  
+    }
+    location /blade-desk/ {                                              
+        proxy_pass http://10.244.0.4:8105/;                  
+    }
+    location /blade-log/ {                                              
+        proxy_pass http://10.244.0.2:8103/;                  
+    }

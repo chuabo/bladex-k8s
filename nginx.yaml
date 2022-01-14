@@ -1,0 +1,28 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: nginx
+  name: nginx-deployment
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: nginx
+  template:
+    metadata:
+      labels:
+        app: nginx
+    spec:
+      containers:
+      - image: nginx:1.14.0
+        name: nginx
+      #标签选择器
+      nodeSelector:
+        type: nginx
+      #设置污点可以调度到对应服务器
+      tolerations:
+      - key: "key"
+        operator: "Equal"
+        value: "nginx"
+        effect: "NoSchedule"

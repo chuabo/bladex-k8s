@@ -1,0 +1,14 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: app-nacos-service
+  namespace: bladex
+spec:
+  selector:
+    name: app-nacos-pod
+  type: NodePort
+  ports:
+    - protocol: TCP
+      port: 18848
+      targetPort: 8848
+      nodePort: 38848

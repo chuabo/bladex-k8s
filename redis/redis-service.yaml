@@ -1,0 +1,14 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: app-redis-service
+  namespace: bladex
+spec:
+  selector:
+    name: app-redis-pod
+  type: NodePort
+  ports:
+    - protocol: TCP
+      port: 6379
+      targetPort: 6379
+      nodePort: 36379

@@ -1,0 +1,19 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: app-nacos-pod
+  namespace: bladex
+  labels:
+    app: app-nacos
+spec:
+  containers:
+  - name: k8s-app-nacos
+    image: chuabo/nacos
+    imagePullPolicy: IfNotPresent
+    ports:
+     - containerPort: 8848
+  tolerations:
+  - key: "node-role.kubernetes.io/master"
+    operator: "Equal"
+    value: ""
+    effect: "NoSchedule"
