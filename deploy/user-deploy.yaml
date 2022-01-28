@@ -44,7 +44,7 @@ spec:
         ports:
         - containerPort: 8102
         volumeMounts:
-        - mountPath : /app/user/logs
+        - mountPath : /app/user/logs/blade-user
           name: log-vol
       volumes:
       - name: log-vol

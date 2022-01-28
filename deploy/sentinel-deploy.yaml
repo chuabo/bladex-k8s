@@ -44,7 +44,7 @@ spec:
         ports:
         - containerPort: 8858
         volumeMounts:
-        - mountPath : /app/sentinel/logs
+        - mountPath : /app/sentinel/logs/blade-sentinel
           name: log-vol
       volumes:
       - name: log-vol

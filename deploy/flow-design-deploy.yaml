@@ -46,7 +46,7 @@ spec:
         ports:
         - containerPort: 9999
         volumeMounts:
-        - mountPath : /app/flow-design/logs
+        - mountPath : /app/flow-design/logs/blade-flow-design
           name: log-vol
       volumes:
       - name: log-vol

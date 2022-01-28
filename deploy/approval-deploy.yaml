@@ -44,7 +44,7 @@ spec:
         ports:
         - containerPort: 8009
         volumeMounts:
-        - mountPath : /app/approval/logs
+        - mountPath : /app/approval/logs/blade-approval
           name: log-vol
       volumes:
       - name: log-vol

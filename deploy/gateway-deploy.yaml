@@ -44,7 +44,7 @@ spec:
         ports:
         - containerPort: 19999
         volumeMounts:
-        - mountPath : /app/gateway/logs
+        - mountPath : /app/gateway/logs/blade-gateway
           name: log-vol
       volumes:
       - name: log-vol

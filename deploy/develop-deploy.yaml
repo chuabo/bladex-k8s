@@ -44,7 +44,7 @@ spec:
         ports:
         - containerPort: 7007
         volumeMounts:
-        - mountPath : /app/develop/logs
+        - mountPath : /app/develop/logs/blade-develop
           name: log-vol
       volumes:
       - name: log-vol
