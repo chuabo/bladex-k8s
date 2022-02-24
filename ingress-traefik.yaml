@@ -1,0 +1,24 @@
+#apiVersion: extensions/v1beta1
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: traefik
+  #namespace: kube-system
+  namespace: bladex
+  annotations:
+    kubernetes.io/ingress.class: traefik
+spec:
+  rules:
+  #- host: traefik.dracula.io
+  - http:
+      paths:
+      #- backend:
+      #    serviceName: traefik
+      #    servicePort: dash  # 使用service中的名字
+        - path: /
+          pathType: Prefix
+          backend:
+            service:
+              name: app-web-service
+              port:
+                number: 80
