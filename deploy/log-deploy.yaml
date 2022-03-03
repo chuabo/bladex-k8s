@@ -37,8 +37,12 @@ spec:
         image: 192.168.127.158:5000/app-log-service:1.0.0
         imagePullPolicy: IfNotPresent
         env:
+        - name: NODE_IP
+          valueFrom:
+            fieldRef:
+              fieldPath: status.hostIP
         - name: PARAMES
-          value: -Djava.security.egd=file:/dev/./urandom -Dspring.cloud.sentinel.transport.dashboard=192.168.127.137:38858 -Dspring.redis.host=192.168.127.137 -Dspring.redis.port=36379 -Dspring.cloud.nacos.discovery.server-addr=192.168.127.137:38848 -Dspring.cloud.nacos.config.server-addr=192.168.127.137:38848 -Dblade.datasource.dev.username=root -Dblade.datasource.dev.password=root -Dblade.datasource.dev.url=jdbc:mysql://192.168.127.137:33306/bladex?useSSL=false&useUnicode=true&characterEncoding=utf-8&zeroDateTimeBehavior=convertToNull&transformedBitIsBoolean=true&tinyInt1isBit=false&allowMultiQueries=true&serverTimezone=UTC&allowPublicKeyRetrieval=true
+          value: -Djava.security.egd=file:/dev/./urandom -Dspring.cloud.sentinel.transport.dashboard=$(NODE_IP):38858 -Dspring.redis.host=$(NODE_IP) -Dspring.redis.port=36379 -Dspring.cloud.nacos.discovery.server-addr=$(NODE_IP):38848 -Dspring.cloud.nacos.config.server-addr=$(NODE_IP):38848 -Dblade.datasource.dev.username=root -Dblade.datasource.dev.password=root -Dblade.datasource.dev.url=jdbc:mysql://$(NODE_IP):33306/bladex?useSSL=false&useUnicode=true&characterEncoding=utf-8&zeroDateTimeBehavior=convertToNull&transformedBitIsBoolean=true&tinyInt1isBit=false&allowMultiQueries=true&serverTimezone=UTC&allowPublicKeyRetrieval=true
         - name: TZ
           value: Asia/Shanghai
         ports:
