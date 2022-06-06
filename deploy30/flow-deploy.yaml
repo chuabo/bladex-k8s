@@ -1,0 +1,56 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: app-flow-service
+  namespace: bladex
+  labels:
+    app: app-flow-service
+spec:
+  ports:
+  - port: 8008
+    targetPort: 8008
+    protocol: TCP
+  selector:
+    app: app-flow-service
+
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: app-flow-service
+  namespace: bladex
+  labels:
+    app: app-flow-dep
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: app-flow-service
+  template:
+    metadata:
+      labels:
+        app: app-flow-service
+    spec:
+      #hostNetwork: true
+      containers:
+      - name: app-flow-pod
+        image: 192.168.127.158:5000/app-flow-service:1.0.0
+        imagePullPolicy: IfNotPresent
+        env:
+        - name: NODE_IP
+          valueFrom:
+            fieldRef:
+              fieldPath: status.hostIP
+        - name: PARAMES
+          value: -Djava.security.egd=file:/dev/./urandom -Dspring.cloud.sentinel.transport.dashboard=$(NODE_IP):38858 -Dspring.redis.host=$(NODE_IP) -Dspring.redis.port=36379 -Dspring.cloud.nacos.discovery.server-addr=$(NODE_IP):38848 -Dspring.cloud.nacos.config.server-addr=$(NODE_IP):38848 -Dspring.datasource.username=root -Dspring.datasource.password=root -Dspring.datasource.url=jdbc:mysql://$(NODE_IP):33306/bladex_flow?useSSL=false&useUnicode=true&characterEncoding=utf-8&zeroDateTimeBehavior=convertToNull&transformedBitIsBoolean=true&tinyInt1isBit=false&allowMultiQueries=true&serverTimezone=UTC&allowPublicKeyRetrieval=true
+        - name: TZ
+          value: Asia/Shanghai
+        ports:
+        - containerPort: 8008
+        volumeMounts:
+        - mountPath : /app/flow/logs/blade-flow
+          name: log-vol
+      volumes:
+      - name: log-vol
+        hostPath:
+          path: /home/logs/blade-flow

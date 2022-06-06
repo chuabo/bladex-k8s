@@ -1,0 +1,56 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: app-community-service
+  namespace: bladex
+  labels:
+    app: app-community-service
+spec:
+  ports:
+  - port: 8201
+    targetPort: 8201
+    protocol: TCP
+  selector:
+    app: app-community-service
+
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: app-community-service
+  namespace: bladex
+  labels:
+    app: app-community-dep
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: app-community-service
+  template:
+    metadata:
+      labels:
+        app: app-community-service
+    spec:
+      #hostNetwork: true
+      containers:
+      - name: app-community-pod
+        image: 192.168.127.158:5000/app-community-service:1.0.0
+        imagePullPolicy: IfNotPresent
+        ports:
+        - containerPort: 8201
+        env:
+        - name: NODE_IP
+          valueFrom:
+            fieldRef:
+              fieldPath: status.hostIP
+        - name: PARAMES
+          value: -Djava.security.egd=file:/dev/./urandom -Dspring.cloud.sentinel.transport.dashboard=$(NODE_IP):38858 -Dspring.redis.host=$(NODE_IP) -Dspring.redis.port=36379 -Dspring.cloud.nacos.discovery.server-addr=$(NODE_IP):38848 -Dspring.cloud.nacos.config.server-addr=$(NODE_IP):38848 -Dspring.datasource.dynamic.datasource.master.username=root -Dspring.datasource.dynamic.datasource.slave.username=root -Dspring.datasource.dynamic.datasource.master.password=P@ssw0rd1qaz!QAZ -Dspring.datasource.dynamic.datasource.slave.password=P@ssw0rd1qaz!QAZ -Dspring.datasource.dynamic.datasource.master.url=jdbc:mysql://$(NODE_IP):33306/bladex?useSSL=false&useUnicode=true&characterEncoding=utf-8&zeroDateTimeBehavior=convertToNull&transformedBitIsBoolean=true&tinyInt1isBit=false&allowMultiQueries=true&serverTimezone=UTC&allowPublicKeyRetrieval=true -Dspring.datasource.dynamic.datasource.slave.url=jdbc:mysql://$(NODE_IP):33306/bladex?useSSL=false&useUnicode=true&characterEncoding=utf-8&zeroDateTimeBehavior=convertToNull&transformedBitIsBoolean=true&tinyInt1isBit=false&allowMultiQueries=true&serverTimezone=UTC&allowPublicKeyRetrieval=true
+        - name: TZ
+          value: Asia/Shanghai
+        volumeMounts:
+        - mountPath : /app/community/logs/blade-community
+          name: log-vol
+      volumes:
+      - name: log-vol
+        hostPath:
+          path: /home/logs/blade-community
